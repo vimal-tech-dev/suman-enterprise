@@ -1,16 +1,17 @@
+<!-- src/App.vue -->
 <template>
   <v-app>
+    <NavBar />
     <v-main>
       <router-view />
-      <v-container class="text-center">
-        <v-alert type="success" variant="tonal">
-          Vuetify 3 + TypeScript is working! 🎉
-        </v-alert>
-      </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script setup lang="ts">
-// No logic needed for now
+import NavBar from "@/components/NavBar.vue";
 </script>
+
+<style>
+/* global adjustments if needed */
+</style>

@@ -8,13 +8,17 @@
     <v-card-subtitle style="white-space: pre-line; text-align: center">{{
       product.category
     }}</v-card-subtitle>
-    <!-- <v-card-text>{{ product.description }}</v-card-text> -->
-    <v-card-actions>
-      <v-spacer />
-      <v-btn icon @click="toggleCompare">
-        <v-icon>{{
-          isInCompare ? "mdi-checkbox-marked" : "mdi-checkbox-blank-outline"
-        }}</v-icon>
+    <v-card-actions class="justify-center">
+      <v-btn
+        :color="isInCompare ? 'error' : 'primary'"
+        variant="outlined"
+        size="small"
+        @click="toggleCompare"
+      >
+        <v-icon start>
+          {{ isInCompare ? "mdi-checkbox-marked" : "mdi-checkbox-blank-outline" }}
+        </v-icon>
+        {{ isInCompare ? "Remove" : "Compare" }}
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -22,8 +26,8 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { Product } from "@/data/products";
 import { useProductStore } from "@/stores/productStore";
+import type { Product } from "@/data/products";
 
 const props = defineProps<{ product: Product }>();
 const store = useProductStore();
@@ -33,8 +37,14 @@ const isInCompare = computed(() =>
 );
 
 function toggleCompare() {
-  isInCompare.value
-    ? store.removeFromCompare(props.product.id)
-    : store.addToCompare(props.product);
+  // console.log("Toggling Compare for:", props.product);
+
+  if (isInCompare.value) {
+    store.removeFromCompare(props.product.id);
+  } else {
+    store.addToCompare(props.product);
+  }
+
+  // console.log("Current Compare List:", store.compareList);
 }
 </script>
