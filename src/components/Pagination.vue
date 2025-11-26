@@ -1,33 +1,27 @@
+<!-- src/components/Pagination.vue -->
 <template>
   <nav aria-label="Pagination" class="flex items-center gap-2">
-    <button
-      :disabled="currentPage === 1"
-      @click="prevPage"
-      class="px-3 py-1 rounded border"
-    >
+    <button type="button" :disabled="currentPage === 1" @click="prevPage" class="px-3 py-1 rounded border"
+      :class="{ 'cursor-not-allowed opacity-60': currentPage === 1 }"
+      :style="currentPage === 1 ? { color: disabledColor } : { color: normalColor }" aria-label="Previous page">
       Prev
     </button>
 
     <template v-for="p in pagesToShow" :key="p.key">
-      <button
-        v-if="p.type === 'page'"
-        @click="onPageClick(p.value)"
-        :class="[
-          'px-3 py-1 rounded border',
-          { 'font-semibold bg-gray-100': p.value === currentPage },
-        ]"
-      >
+      <button v-if="p.type === 'page'" type="button" @click="onPageClick(p.value)" :class="[
+        'px-3 py-1 rounded border',
+        { 'font-semibold bg-gray-100': p.value === currentPage }
+      ]" :style="p.value === currentPage ? { color: activeColor } : { color: normalColor }"
+        :aria-current="p.value === currentPage ? 'page' : undefined">
         {{ p.value }}
       </button>
 
-      <span v-else class="px-2">…</span>
+      <span v-else class="px-2" :style="{ color: mutedColor }" aria-hidden="true">…</span>
     </template>
 
-    <button
-      :disabled="currentPage === pageCount"
-      @click="nextPage"
-      class="px-3 py-1 rounded border"
-    >
+    <button type="button" :disabled="currentPage === pageCount" @click="nextPage" class="px-3 py-1 rounded border"
+      :class="{ 'cursor-not-allowed opacity-60': currentPage === pageCount }"
+      :style="currentPage === pageCount ? { color: disabledColor } : { color: normalColor }" aria-label="Next page">
       Next
     </button>
   </nav>
@@ -46,6 +40,12 @@ export default defineComponent({
   },
   emits: ["update:modelValue"],
   setup(props, { emit }) {
+    // explicit colors to override any global button text-color rules
+    const normalColor = "#111827"; // dark (equivalent to Tailwind gray-900)
+    const activeColor = "#0f172a"; // slightly darker for active
+    const disabledColor = "#9CA3AF"; // gray-400
+    const mutedColor = "#6B7280"; // gray-500 for ellipsis
+
     const pageCount = computed(() =>
       Math.max(1, Math.ceil(props.totalItems / props.itemsPerPage))
     );
@@ -62,15 +62,12 @@ export default defineComponent({
     });
 
     function changePage(val?: number) {
-      // Coerce undefined to current page, then ensure bounds
       const base = Number(val ?? currentPage.value);
       const to = Math.min(Math.max(1, Math.round(base)), pageCount.value);
       currentPage.value = to;
     }
 
-    // Methods moved out of the template to satisfy the template type checker
     function prevPage() {
-      // use currentPage.value explicitly and compute a definite number
       changePage((currentPage.value ?? 1) - 1);
     }
 
@@ -79,7 +76,6 @@ export default defineComponent({
     }
 
     function onPageClick(val?: number) {
-      // val may be undefined (template checker conservative) — handle it here
       changePage(val ?? currentPage.value);
     }
 
@@ -99,9 +95,10 @@ export default defineComponent({
       const sorted = Array.from(visible).sort((a, b) => a - b);
       for (let i = 0; i < sorted.length; i++) {
         const page = sorted[i];
+        if (page === undefined) continue;
         range.push({ type: "page", value: page, key: `p-${page}` });
         const next = sorted[i + 1];
-        if (next && next > page + 1) {
+        if (typeof next === "number" && next > page + 1) {
           range.push({ type: "ellipsis", key: `e-${page}` });
         }
       }
@@ -116,6 +113,11 @@ export default defineComponent({
       prevPage,
       nextPage,
       onPageClick,
+      // expose colors for template bindings
+      normalColor,
+      activeColor,
+      disabledColor,
+      mutedColor,
     };
   },
 });
