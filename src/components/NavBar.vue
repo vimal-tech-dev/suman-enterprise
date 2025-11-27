@@ -30,7 +30,7 @@
           <!-- Compare TEXT + badge (desktop & mobile) -->
           <RouterLink to="/compare" style="text-decoration: none">
             <v-btn text class="d-flex align-center">
-              <span>Compare</span>
+              <span style="font-size: 10px">Compare</span>
               <v-badge
                 v-if="compareCount > 0"
                 :content="compareCount"
@@ -73,7 +73,7 @@ function onImgError(ev: Event) {
 
 /* explicit styling for native img used as logo */
 .navbar-logo {
-  height: 100px;
+  height: 80px;
   width: auto;
   display: block;
   object-fit: contain;
