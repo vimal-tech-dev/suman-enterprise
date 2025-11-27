@@ -33,7 +33,7 @@
 
           <p>
             Hemanshu Bhai<br />
-            +91 - 940 844 5376
+            +91 940 844 5376
           </p>
 
           <!-- WhatsApp Connect -->

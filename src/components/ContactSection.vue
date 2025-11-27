@@ -8,10 +8,10 @@
         <h3 class="text-h6">Hemanshu Bhai</h3>
         <h3 class="text-h6">
           Mobile number:<br />
-          +91 940 844 5376
+          940 844 5376
         </h3>
         <v-btn class="text-h6" href="tel:+919408445376" color="primary" variant="flat">
-          Tap to Dial
+          Tap to dial
         </v-btn>
       </v-col>
     </v-row>
