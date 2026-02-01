@@ -1,4 +1,5 @@
-<!-- src/views/ProductsPage.vue -->
+<!-- src/views/ComparePage.vue -->
+
 <template>
   <v-container fluid>
     <!-- Compare product (same as before, but now as a component) -->
