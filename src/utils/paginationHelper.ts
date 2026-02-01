@@ -1,8 +1,9 @@
+// /src/utils/paginationHelper.ts
 export function buildPaginationQuery(page: number, itemsPerPage: number) {
-    const p = Math.max(1, Number(page) || 1)
-    const per = Math.max(1, Number(itemsPerPage) || 10)
-    const offset = (p - 1) * per
-    return { offset, limit: per }
+  const p = Math.max(1, Number(page) || 1)
+  const per = Math.max(1, Number(itemsPerPage) || 10)
+  const offset = (p - 1) * per
+  return { offset, limit: per }
 }
 
 
