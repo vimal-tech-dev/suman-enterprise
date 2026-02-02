@@ -2,43 +2,41 @@
 @import './base.css';
 
 #app {
-  max-width: 1280px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 80px 12px 32px;
+  /* top = navbar height + spacing */
   font-weight: normal;
 }
 
+/* Links in emerald */
 a,
 .green {
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+  color: #22c55e;
+  transition: 0.3s ease;
+  padding: 2px;
 }
 
 @media (hover: hover) {
   a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+    background-color: rgba(34, 197, 94, 0.12);
   }
 }
 
+/* Remove old desktop flex/grid layout so Vuetify handles responsiveness */
 @media (min-width: 1024px) {
   body {
-    display: flex;
-    place-items: center;
+    display: block;
   }
 
   #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+    padding: 88px 20px 40px;
   }
 }
 
-/* src/assets/main.css — append at the end */
-
-/* Make native buttons and Vuetify v-btn use the site text color */
+/* Keep button text readable on dark background */
 button,
 .v-application .v-btn {
-  color: var(--color-text) !important;
+  color: inherit !important;
 }
