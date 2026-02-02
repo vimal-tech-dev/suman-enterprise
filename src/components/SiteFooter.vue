@@ -22,9 +22,15 @@
         <v-col cols="12" md="3">
           <h5 class="text-subtitle-1">Quick Links</h5>
           <ul class="footer-links">
-            <li><RouterLink to="/">Home</RouterLink></li>
-            <li><RouterLink to="/products">Products</RouterLink></li>
-            <li><RouterLink to="/compare">Compare</RouterLink></li>
+            <li>
+              <RouterLink to="/">Home</RouterLink>
+            </li>
+            <li>
+              <RouterLink to="/products">Products</RouterLink>
+            </li>
+            <li>
+              <RouterLink to="/compare">Compare</RouterLink>
+            </li>
           </ul>
         </v-col>
 
@@ -38,12 +44,7 @@
 
           <!-- WhatsApp Connect -->
           <div class="whatsapp-contact mt-2">
-            <a
-              href="https://wa.me/919408445376"
-              target="_blank"
-              rel="noopener"
-              class="whatsapp-button"
-            >
+            <a href="https://wa.me/919408445376" target="_blank" rel="noopener" class="whatsapp-button">
               <v-icon color="white" class="mr-1">mdi-whatsapp</v-icon>
               WhatsApp Connect
             </a>
@@ -57,12 +58,8 @@
             &copy; {{ new Date().getFullYear() }} Suman Enterprise. All rights reserved.
             <br />
             Powered by
-            <a
-              href="https://vimaltech.dev/"
-              target="_blank"
-              rel="noopener"
-              style="text-decoration: none; color: inherit; font-weight: 500"
-            >
+            <a href="https://vimaltech.dev/" target="_blank" rel="noopener"
+              style="text-decoration: none; color: inherit; font-weight: 500">
               Vimal Tech
             </a>
           </small>
@@ -77,33 +74,39 @@ import logo from "@/assets/footer-logo.png"; // <-- import the image
 </script>
 
 <style scoped>
-/* Remove ALL spacing & default Vuetify layout gaps */
+.v-footer {
+  background: radial-gradient(circle at top, #020617 0, #020617 60%, #020617 100%);
+  border-top: 1px solid rgba(148, 163, 184, 0.4);
+  padding-top: 18px;
+  padding-bottom: 12px;
+  color: rgba(226, 232, 240, 0.9);
+}
+
 .logo-row {
   display: flex;
   align-items: center;
-  gap: 0px !important; /* completely remove gap */
+  gap: 6px;
   margin: 0;
   padding: 0;
 }
 
-/* Control exact gap manually */
 .footer-logo {
   height: 40px;
   width: 40px;
   object-fit: contain;
-  margin-right: 6px; /* adjust this: 0px–6px */
 }
 
-/* Brand text aligned perfectly */
 .brand-title {
-  margin: 0; /* remove all margins */
+  margin: 0;
   padding: 0;
   line-height: 1.2;
+  font-weight: 600;
 }
 
-/* Mission text placed below */
 .mission-text {
-  margin-top: 6px;
+  margin-top: 8px;
+  font-size: 0.86rem;
+  color: rgba(148, 163, 184, 0.95);
 }
 
 .footer-links {
@@ -112,12 +115,16 @@ import logo from "@/assets/footer-logo.png"; // <-- import the image
   margin: 0;
 }
 
+.footer-links li+li {
+  margin-top: 4px;
+}
+
 .whatsapp-button {
   display: inline-flex;
   align-items: center;
   padding: 6px 12px;
   border-radius: 6px;
-  background-color: #25d366; /* WhatsApp Green */
+  background-color: #25d366;
   color: white;
   text-decoration: none;
   font-weight: 500;
@@ -125,11 +132,15 @@ import logo from "@/assets/footer-logo.png"; // <-- import the image
 }
 
 .whatsapp-button:hover {
-  background-color: #1ebe5d; /* darker hover */
+  background-color: #1ebe5d;
 }
 
 .whatsapp-contact {
   display: flex;
   align-items: center;
+}
+
+small {
+  color: rgba(148, 163, 184, 0.95);
 }
 </style>

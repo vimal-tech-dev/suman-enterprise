@@ -1,32 +1,28 @@
 <!-- src/views/ProductList.vue -->
 <template>
   <v-container>
-    <v-row class="mb-4" style="text-align: center">
-      <v-col cols="12" md="6">
-        <!-- Search is now global; clear button also updates store -->
-        <v-text-field
-          v-model="ui.searchQuery"
-          label="Search products"
-          clearable
-          @click:clear="ui.setSearch('')"
-        />
-        <v-btn class="mt-2" text color="primary" @click="ui.setSearch('')"
-          >Reset Search</v-btn
-        >
-      </v-col>
+    <v-sheet class="filter-shell" elevation="0">
+      <v-row class="filter-row" align="center" justify="space-between">
+        <v-col cols="12" md="6">
+          <v-text-field v-model="ui.searchQuery" label="Search products" variant="outlined" density="compact" clearable
+            prepend-inner-icon="mdi-magnify" @click:clear="ui.setSearch('')" />
+        </v-col>
 
-      <v-col cols="12" md="4">
-        <v-select
-          v-model="categoryFilter"
-          :items="categories"
-          label="Filter by Category"
-          clearable
-        />
-        <v-btn class="mt-2" text color="primary" @click="categoryFilter = null"
-          >Reset Category Filter</v-btn
-        >
-      </v-col>
-    </v-row>
+        <v-col cols="12" md="4">
+          <v-select v-model="categoryFilter" :items="categories" label="Filter by category" variant="outlined"
+            density="compact" clearable />
+        </v-col>
+
+        <v-col cols="12" class="filter-actions">
+          <v-btn variant="text" color="primary" size="small" @click="ui.setSearch('')">
+            Clear search
+          </v-btn>
+          <v-btn variant="text" color="primary" size="small" @click="categoryFilter = null">
+            Clear category
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-sheet>
 
     <v-row>
       <v-col v-for="product in pagedProducts" :key="product.id" cols="12" sm="6" md="3">
@@ -94,3 +90,34 @@ const pagedProducts = computed(() => {
   return filteredProducts.value.slice(start, start + ui.itemsPerPage);
 });
 </script>
+
+<style scoped>
+.filter-shell {
+  border-radius: 16px;
+  padding: 10px 10px 6px;
+  border: 1px solid rgba(148, 163, 184, 0.36);
+  background: #020617;
+}
+
+.filter-row {
+  row-gap: 8px;
+}
+
+.filter-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+/* Mobile spacing */
+@media (max-width: 599px) {
+  .filter-shell {
+    padding: 8px 8px 4px;
+  }
+
+  .filter-actions {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}
+</style>

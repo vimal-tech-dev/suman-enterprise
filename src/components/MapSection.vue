@@ -3,21 +3,16 @@
   <v-container>
     <v-row>
       <v-col cols="12" md="10" class="mx-auto">
-        <h3 class="text-h6 mb-2" style="text-align: center">Our Location</h3>
-
-        <div class="map-wrapper">
-          <!-- Replace the src with your Google Maps share/embed URL -->
-          <iframe
-            :src="embedUrl"
-            width="100%"
-            height="400"
-            style="border: 0"
-            allowfullscreen
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            title="Our location on Google Maps"
-          ></iframe>
-        </div>
+        <v-sheet class="section-card" elevation="0">
+          <h3 class="section-title">Our Location</h3>
+          <p class="section-helper">
+            Visit us for personalised guidance and product selection assistance.
+          </p>
+          <div class="map-wrapper">
+            <iframe :src="embedUrl" width="100%" height="400" style="border: 0" allowfullscreen loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade" title="Our location on Google Maps"></iframe>
+          </div>
+        </v-sheet>
       </v-col>
     </v-row>
   </v-container>
@@ -29,8 +24,27 @@ const embedUrl =
 </script>
 
 <style scoped>
+.section-card {
+  border-radius: 18px;
+  padding: 20px 18px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: radial-gradient(circle at top, #020617 0, #020617 60%, #020617 100%);
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.section-helper {
+  text-align: center;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
 .map-wrapper iframe {
-  border-radius: 6px;
-  min-height: 250px;
+  border-radius: 12px;
+  min-height: 260px;
 }
 </style>
