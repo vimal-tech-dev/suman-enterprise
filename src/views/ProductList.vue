@@ -1,39 +1,65 @@
 <!-- src/views/ProductList.vue -->
 <template>
   <v-container>
-    <v-sheet class="filter-shell" elevation="0">
-      <v-row class="filter-row" align="center" justify="space-between">
+    <!-- Premium filter shell -->
+    <v-sheet class="filter-premium" elevation="0">
+      <v-row class="filter-row" align="center">
         <v-col cols="12" md="6">
-          <v-text-field v-model="ui.searchQuery" label="Search products" variant="outlined" density="compact" clearable
-            prepend-inner-icon="mdi-magnify" @click:clear="ui.setSearch('')" />
+          <v-text-field
+            v-model="ui.searchQuery"
+            label="Search products"
+            variant="outlined"
+            density="compact"
+            clearable
+            prepend-inner-icon="mdi-magnify"
+            @click:clear="ui.setSearch('')"
+          />
         </v-col>
 
         <v-col cols="12" md="4">
-          <v-select v-model="categoryFilter" :items="categories" label="Filter by category" variant="outlined"
-            density="compact" clearable />
+          <v-select
+            v-model="categoryFilter"
+            :items="categories"
+            label="Filter by category"
+            variant="outlined"
+            density="compact"
+            clearable
+          />
         </v-col>
 
         <v-col cols="12" class="filter-actions">
           <v-btn variant="text" color="primary" size="small" @click="ui.setSearch('')">
             Clear search
           </v-btn>
-          <v-btn variant="text" color="primary" size="small" @click="categoryFilter = null">
+          <v-btn
+            variant="text"
+            color="primary"
+            size="small"
+            @click="categoryFilter = null"
+          >
             Clear category
           </v-btn>
         </v-col>
       </v-row>
     </v-sheet>
 
-    <v-row>
-      <v-col v-for="product in pagedProducts" :key="product.id" cols="12" sm="6" md="3">
+    <!-- Product grid -->
+    <v-row class="mt-6">
+      <v-col
+        v-for="product in pagedProducts"
+        :key="product.id"
+        cols="12"
+        sm="6"
+        md="4"
+        lg="3"
+      >
         <ProductCard :product="product" />
       </v-col>
     </v-row>
 
+    <!-- Pagination -->
     <v-row class="mt-6" justify="center">
       <v-col cols="auto">
-        <!-- <v-pagination v-model="ui.page" :length="pageCount" :total-visible="7" /> -->
-        <!-- <Pagination v-model="ui.page" :total-items="filteredProducts.length" :items-per-page="ui.itemsPerPage" /> -->
         <VPaginationWithText v-model="ui.page" :length="pageCount" :total-visible="7" />
       </v-col>
     </v-row>
@@ -45,21 +71,19 @@ import { computed, ref, watch } from "vue";
 import { useUIStore } from "@/stores/uiStore";
 import { useProductStore } from "@/stores/productStore";
 import ProductCard from "@/components/ProductCard.vue";
-// import Pagination from "@/components/Pagination.vue";
 import VPaginationWithText from "@/components/VPaginationWithText.vue";
+import type { Product } from "@/data/products";
 
 const ui = useUIStore();
 const store = useProductStore();
 
-// local category filter is fine as component-specific state
 const categoryFilter = ref<string | null>(null);
 
 const categories = computed(() => {
   return [...new Set(store.productList.map((p) => p.category))];
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function matchesSearch(p: any, q: string | undefined) {
+function matchesSearch(p: Product, q?: string): boolean {
   const s = (q || "").trim().toLowerCase();
   if (!s) return true;
   return p.name.toLowerCase().includes(s);
@@ -74,17 +98,14 @@ const filteredProducts = computed(() => {
   });
 });
 
-// Pagination: compute pageCount and slice
 const pageCount = computed(() => {
   return Math.max(1, Math.ceil(filteredProducts.value.length / ui.itemsPerPage));
 });
 
-// Ensure ui.page is within bounds if filters change
 watch([filteredProducts, () => ui.itemsPerPage], () => {
   if (ui.page > pageCount.value) ui.setPage(1);
 });
 
-// slice for the current page
 const pagedProducts = computed(() => {
   const start = (ui.page - 1) * ui.itemsPerPage;
   return filteredProducts.value.slice(start, start + ui.itemsPerPage);
@@ -92,27 +113,28 @@ const pagedProducts = computed(() => {
 </script>
 
 <style scoped>
-.filter-shell {
-  border-radius: 16px;
-  padding: 10px 10px 6px;
-  border: 1px solid rgba(148, 163, 184, 0.36);
-  background: #020617;
+.filter-premium {
+  border-radius: var(--radius-md);
+  padding: 14px 12px 10px;
+  background: radial-gradient(circle at top left, #052238 0, #020816 60%);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-subtle);
 }
 
 .filter-row {
-  row-gap: 8px;
+  row-gap: 10px;
 }
 
 .filter-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 6px;
+  gap: 8px;
 }
 
-/* Mobile spacing */
-@media (max-width: 599px) {
-  .filter-shell {
-    padding: 8px 8px 4px;
+/* Mobile */
+@media (max-width: 600px) {
+  .filter-premium {
+    padding: 10px 10px 8px;
   }
 
   .filter-actions {

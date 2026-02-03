@@ -1,19 +1,24 @@
 <!-- src/views/ComparePage.vue -->
 <template>
-  <v-container fluid class="page-shell">
-    <section class="hero">
-      <div class="hero-content">
-        <h1 class="hero-title">
-          Need guide from support team.
-        </h1>
-        <p class="hero-subtitle">
-          Call directly for quick response or whatsapp us to our support team for further assistance.
-        </p>
+  <v-container fluid class="compare-page">
+    <!-- Premium support hero -->
+    <section class="hero-premium">
+      <div class="hero-badge">
+        <div class="chip-gold">Need Help?</div>
       </div>
+
+      <h1 class="hero-title">Need guidance from the support team.</h1>
+
+      <p class="hero-subtitle">
+        Call directly for a quick response or WhatsApp our support team for personalised
+        assistance with products and sizing.
+      </p>
     </section>
-    <v-container class="page-inner" fluid>
-      <!-- Compare product (same as before, but now as a component) -->
-      <CompareView />
+
+    <!-- Main content shell -->
+    <v-container class="content-shell" fluid>
+      <!-- Compare products -->
+      <CompareView class="mt-4" />
 
       <!-- Footer -->
       <SiteFooter class="mt-12" />
@@ -23,49 +28,65 @@
 
 <script setup lang="ts">
 import SiteFooter from "@/components/SiteFooter.vue";
-import CompareView from "./CompareView.vue";
+import CompareView from "@/views/CompareView.vue";
 </script>
 
 <style scoped>
-.page-shell {
+.compare-page {
   padding: 0 0 32px;
 }
 
-.page-inner {
-  padding: 0 0 24px;
+/* Hero matches ProductsPage premium hero */
+.hero-premium {
+  max-width: 980px;
+  margin: 0 auto 20px;
+  padding: 16px 14px 12px;
+  text-align: center;
 }
 
-.hero {
-  padding: 12px 0 10px;
-}
-
-.hero-content {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 0 12px 4px;
+.hero-badge {
+  margin-bottom: 10px;
 }
 
 .hero-title {
-  font-size: clamp(1.5rem, 4.6vw, 2.2rem);
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.5rem, 4.4vw, 2.1rem);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  background: linear-gradient(135deg, #f9fafb 0, #d4af37 55%, #f9fafb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
 }
 
 .hero-subtitle {
-  margin-top: 8px;
-  max-width: 620px;
-  color: rgba(226, 232, 240, 0.85);
-  font-size: 0.9rem;
+  margin-top: 4px;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--muted-color);
+  font-size: 0.92rem;
+  line-height: 1.6;
 }
 
+/* Inner content spacing */
+.content-shell {
+  padding: 0 12px 24px;
+}
+
+/* Mobile tweaks */
 @media (max-width: 599px) {
-  .hero-content {
-    padding-inline: 8px;
+  .hero-premium {
+    padding: 12px 10px 10px;
   }
 
   .hero-title {
-    letter-spacing: 0.04em;
+    letter-spacing: 0.08em;
+  }
+
+  .hero-subtitle {
+    font-size: 0.88rem;
   }
 }
 </style>

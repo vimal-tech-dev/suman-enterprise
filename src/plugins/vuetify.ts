@@ -8,19 +8,20 @@ const vuetify = createVuetify({
   components,
   directives,
   theme: {
-    defaultTheme: 'sumanDark',
+    defaultTheme: 'medicalPremium',
     themes: {
-      sumanDark: {
+      medicalPremium: {
         dark: true,
         colors: {
-          background: '#020617', // overall background
-          surface: '#020617', // cards / sheets
-          primary: '#22c55e', // emerald
-          'primary-darken-1': '#16a34a',
-          secondary: '#38bdf8', // soft blue accent (small details only)
+          background: '#020816',
+          surface: '#052238',
+          primary: '#d4af37', // gold accent
+          'primary-darken-1': '#91762b',
+          secondary: '#0a4b78', // medical blue
+          'secondary-darken-1': '#0d3b5a',
           error: '#f97373',
           info: '#38bdf8',
-          success: '#22c55e',
+          success: '#1dbf73',
           warning: '#facc15',
         },
       },

@@ -1,25 +1,26 @@
 <!-- src/views/ProductsPage.vue -->
 <template>
-  <v-container fluid class="page-shell">
-    <section class="hero">
-      <div class="hero-content">
-        <h1 class="hero-title">
-          Orthopaedic Excellence, Thoughtfully Curated.
-        </h1>
-        <p class="hero-subtitle">
-          Explore braces, supports, and fracture aids carefully selected to
-          support safe, comfortable, and confident recovery.
-        </p>
+  <v-container fluid class="products-page">
+    <!-- Premium hero section -->
+    <section class="hero-premium">
+      <div class="hero-badge">
+        <div class="chip-gold">Premium Medical Solutions</div>
       </div>
+      <h1 class="hero-title">Orthopaedic Excellence, Thoughtfully Curated.</h1>
+      <p class="hero-subtitle">
+        Discover premium braces, supports, and fracture aids meticulously selected to
+        ensure safe, comfortable, and confident recovery for every patient.
+      </p>
     </section>
 
-    <v-container class="page-inner" fluid>
+    <!-- Main content shell -->
+    <v-container class="content-shell" fluid>
       <ProductList />
 
       <ContactSection class="mt-10" />
       <AboutSection class="mt-10" />
-      <MapSection class="mt-8" />
-      <SiteFooter class="mt-10" />
+      <MapSection class="mt-10" />
+      <SiteFooter class="mt-12" />
     </v-container>
   </v-container>
 </template>
@@ -33,45 +34,57 @@ import SiteFooter from "@/components/SiteFooter.vue";
 </script>
 
 <style scoped>
-.page-shell {
-  padding: 0 0 32px;
+.products-page {
+  padding: 0;
 }
 
-.page-inner {
-  padding: 0 0 24px;
+.hero-premium {
+  max-width: 980px;
+  margin: 0 auto 20px;
+  padding: 16px 14px 12px;
+  text-align: center;
 }
 
-.hero {
-  padding: 12px 0 10px;
-}
-
-.hero-content {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 0 12px 4px;
+.hero-badge {
+  margin-bottom: 10px;
 }
 
 .hero-title {
-  font-size: clamp(1.5rem, 4.6vw, 2.2rem);
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.6rem, 4.8vw, 2.3rem);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  background: linear-gradient(135deg, #f9fafb 0, #d4af37 55%, #f9fafb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
 }
 
 .hero-subtitle {
-  margin-top: 8px;
-  max-width: 620px;
-  color: rgba(226, 232, 240, 0.85);
-  font-size: 0.9rem;
+  max-width: 680px;
+  margin: 0 auto;
+  font-size: 0.92rem;
+  color: var(--muted-color);
+  line-height: 1.6;
 }
 
-@media (max-width: 599px) {
-  .hero-content {
-    padding-inline: 8px;
+.content-shell {
+  padding: 0 12px 36px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .hero-premium {
+    padding: 12px 10px 10px;
   }
 
   .hero-title {
-    letter-spacing: 0.04em;
+    letter-spacing: 0.08em;
+  }
+
+  .hero-subtitle {
+    font-size: 0.88rem;
   }
 }
 </style>
