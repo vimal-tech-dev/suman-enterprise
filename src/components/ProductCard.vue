@@ -1,20 +1,29 @@
 <!-- src/components/ProductCard.vue -->
 <template>
-  <v-card class="product-card" elevation="3">
-    <v-img :src="product.image" class="product-image" height="190" cover />
+  <v-card class="product-card" elevation="4">
+    <v-img :src="product.image" height="190" cover class="product-image" />
 
-    <v-card-text class="text-center">
-      <div class="product-name">{{ product.name }}</div>
-      <div class="product-category">{{ product.category }}</div>
+    <v-card-text class="product-body text-center">
+      <div class="product-name">
+        {{ product.name }}
+      </div>
+      <div class="product-category text-muted">
+        {{ product.category }}
+      </div>
     </v-card-text>
 
-    <v-card-actions class="justify-center pb-4">
-      <v-btn :color="isInCompare ? 'error' : 'primary'" variant="outlined" size="small" class="compare-button"
-        @click="toggleCompare">
+    <v-card-actions class="product-actions justify-center">
+      <v-btn
+        :color="isInCompare ? 'error' : 'primary'"
+        variant="outlined"
+        size="small"
+        class="product-btn"
+        @click="toggleCompare"
+      >
         <v-icon start size="18">
-          {{ isInCompare ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline' }}
+          {{ isInCompare ? "mdi-checkbox-marked" : "mdi-checkbox-blank-outline" }}
         </v-icon>
-        {{ isInCompare ? 'Remove' : 'Select to Compare' }}
+        {{ isInCompare ? "Remove" : "Select to Compare" }}
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -33,57 +42,60 @@ const isInCompare = computed(() =>
 );
 
 function toggleCompare() {
-  // console.log("Toggling Compare for:", props.product);
-
   if (isInCompare.value) {
     store.removeFromCompare(props.product.id);
   } else {
     store.addToCompare(props.product);
   }
-
-  // console.log("Current Compare List:", store.compareList);
 }
 </script>
 
 <style scoped>
 .product-card {
-  margin: 8px auto;
   max-width: 320px;
-  border-radius: 18px;
-  background: radial-gradient(circle at top, #020617 0, #020617 60%, #020617 100%);
-  border: 1px solid rgba(148, 163, 184, 0.35);
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  margin: 10px auto;
+  border-radius: var(--radius-lg);
+  background: radial-gradient(circle at top, #0a4b78 0, #020816 60%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
 }
 
 .product-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(248, 250, 252, 0.7);
-  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.6);
+  transform: translateY(-6px);
+  border-color: rgba(212, 175, 55, 0.7);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.55);
 }
 
 .product-image {
-  border-top-left-radius: 18px;
-  border-top-right-radius: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.product-body {
+  padding-top: 16px;
+  padding-bottom: 8px;
 }
 
 .product-name {
-  margin-top: 14px;
   font-weight: 600;
   font-size: 0.98rem;
 }
 
 .product-category {
   margin-top: 4px;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  opacity: 0.7;
 }
 
-.compare-button {
-  border-radius: 999px;
-  text-transform: none;
-  font-size: 0.78rem;
-  padding-inline: 18px;
+.product-actions {
+  padding-bottom: 16px;
+}
+
+.product-btn {
+  border-radius: var(--radius-pill);
+  border-color: rgba(212, 175, 55, 0.75) !important;
+  color: var(--gold-soft) !important;
 }
 </style>

@@ -1,16 +1,21 @@
 <!-- src/components/NavBar.vue -->
 <template>
-  <v-app-bar elevation="0" density="comfortable" app fixed class="navbar-glass">
+  <v-app-bar elevation="0" app fixed class="navbar-premium" density="comfortable">
     <v-container fluid>
       <v-row align="center" no-gutters class="w-100">
-        <!-- Left: logo + brand (desktop); logo only (mobile) -->
-        <v-col cols="auto" class="d-flex align-center">
-          <RouterLink to="/" class="d-flex align-center text-decoration-none">
-            <img :src="logo" alt="Suman Enterprise Logo" class="navbar-logo mr-2" @error="onImgError" />
-
-            <!-- Hide brand on very small screens -->
-            <div class="brand-block">
-              <span class="brand-title">SUMAN ENTERPRISE</span>
+        <!-- Brand -->
+        <v-col cols="auto" class="d-flex align-center brand-col">
+          <RouterLink to="/" class="brand-link">
+            <div class="logo-glass">
+              <img
+                :src="logo"
+                alt="Suman Enterprise Logo"
+                class="logo-img"
+                @error="onImgError"
+              />
+            </div>
+            <div class="brand-text">
+              <span class="brand-title">Suman Enterprise</span>
               <span class="brand-subtitle">Orthopaedic &amp; Fracture Aids</span>
             </div>
           </RouterLink>
@@ -18,14 +23,14 @@
 
         <v-spacer />
 
-        <!-- Right: compact compare pill (mobile & desktop) -->
-        <v-col cols="auto" class="d-flex align-center navbar-actions">
-          <RouterLink to="/compare" class="text-decoration-none">
-            <v-btn class="compare-pill" variant="flat" size="small" color="primary">
-              <v-icon start size="16">mdi-compare</v-icon>
-              <span class="compare-pill-label">
+        <!-- Right: compare pill -->
+        <v-col cols="auto" class="d-flex align-center">
+          <RouterLink to="/compare" class="compare-link">
+            <v-btn class="compare-pill" color="primary" variant="flat" size="small">
+              <v-icon start size="18">mdi-compare</v-icon>
+              <span class="compare-label">
                 Compare
-                <span v-if="compareCount > 0" class="compare-pill-count">
+                <span v-if="compareCount > 0" class="compare-count">
                   ({{ compareCount }})
                 </span>
               </span>
@@ -40,133 +45,189 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useProductStore } from "@/stores/productStore";
-import logo from "@/assets/Suman_Enterprise.png"; // ensure file exists at this path
+import logo from "@/assets/Suman_Enterprise.png";
 
-// compare count (auto updates)
 const productStore = useProductStore();
 const compareCount = computed(() => productStore.compareList.length);
 
 function onImgError(ev: Event) {
-  // show helpful diagnostics in the browser console
-  // optionally replace with placeholder so UI isn't broken
-  const img = ev?.target as HTMLImageElement | null;
+  const img = ev.target as HTMLImageElement | null;
   if (img) {
-    img.src = ""; // clear, or set to a known placeholder path like '/logo-fallback.png'
+    img.style.opacity = "0.4";
   }
 }
 </script>
 
 <style scoped>
-.text-decoration-none {
+.navbar-premium {
+  background: radial-gradient(
+      circle at top left,
+      rgba(212, 175, 55, 0.12),
+      transparent 55%
+    ),
+    linear-gradient(90deg, rgba(5, 37, 60, 0.98), rgba(4, 30, 50, 0.98));
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  color: #f9fafb;
+}
+
+/* Prevent brand column from growing too much */
+.brand-col {
+  flex: 0 1 auto;
+  min-width: 0; /* allow text to shrink */
+}
+
+.brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   text-decoration: none;
   color: inherit;
+  max-width: 100%;
 }
 
-/* Base logo size */
-.navbar-logo {
+.logo-glass {
+  flex-shrink: 0; /* logo never shrinks */
+  width: 40px;
   height: 40px;
-  width: auto;
-  display: block;
-  object-fit: contain;
-}
-
-.brand-block {
+  border-radius: 14px;
+  background: radial-gradient(circle at 30% 20%, #ffffff 0, #d9e4ff 18%, #0a4b78 85%);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
 }
 
+.logo-img {
+  max-width: 70%;
+  max-height: 70%;
+  object-fit: contain;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* allow text to shrink/wrap */
+}
+
 .brand-title {
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-family: "Playfair Display", serif;
+  font-size: 0.98rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+  white-space: nowrap; /* prevent wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .brand-subtitle {
-  font-size: 0.7rem;
-  opacity: 0.7;
+  font-size: 0.72rem;
+  color: rgba(226, 232, 240, 0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Glass background + good contrast */
-.navbar-glass {
-  background: #020617 !important;
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(148, 163, 184, 0.45);
-  color: #e5e7eb;
+/* Compare pill */
+.compare-link {
+  text-decoration: none;
 }
 
-.navbar-actions {
-  gap: 6px;
-}
-
-/* Compare pill looks the same on all devices */
 .compare-pill {
   border-radius: 999px;
-  padding-inline: 12px;
-  text-transform: none;
+  padding-inline: 16px;
+  background: linear-gradient(135deg, #0a4b78, #0e6ba3) !important;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.4);
+  flex-shrink: 0; /* button never shrinks */
 }
 
-.compare-pill-label {
+.compare-label {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
-  font-size: 0.76rem;
+  gap: 4px;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
-.compare-pill-count {
-  font-weight: 500;
+.compare-count {
+  font-weight: 600;
+  color: var(--gold-soft);
 }
 
-/* Keep fixed bar stable */
-.v-app-bar {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0;
-  right: 0;
-  transform: translateZ(0);
-  will-change: transform;
-}
-
-/* -------- Mobile (<= 600px) -------- */
-@media (max-width: 600px) {
-  .navbar-logo {
-    height: 68px;
-    /* was 28px – larger for clarity */
+/* -------- Small mobile (≤ 400px) -------- */
+@media (max-width: 400px) {
+  .logo-glass {
+    width: 32px;
+    height: 32px;
   }
 
-  .brand-block {
-    display: none;
-    /* keep text hidden to save space */
+  .brand-link {
+    gap: 6px;
   }
 
-  .navbar-glass {
-    height: 58px;
-    /* a little taller to match bigger logo */
+  .brand-title {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+  }
+
+  .brand-subtitle {
+    display: none; /* hide subtitle on very small screens */
+  }
+
+  .compare-pill {
+    padding-inline: 10px;
+  }
+
+  .compare-label {
+    font-size: 0.7rem;
+  }
+}
+
+/* -------- Mobile (401px - 600px) -------- */
+@media (min-width: 401px) and (max-width: 600px) {
+  .logo-glass {
+    width: 36px;
+    height: 36px;
+  }
+
+  .brand-link {
+    gap: 8px;
+  }
+
+  .brand-title {
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+  }
+
+  .brand-subtitle {
+    font-size: 0.68rem;
   }
 
   .compare-pill {
     padding-inline: 12px;
-    min-width: auto;
   }
 
-  .compare-pill-label {
-    font-size: 0.78rem;
+  .compare-label {
+    font-size: 0.75rem;
   }
 }
 
-/* -------- Desktop (>= 960px) -------- */
+/* -------- Desktop (≥ 960px) -------- */
 @media (min-width: 960px) {
-  .navbar-logo {
+  .logo-glass {
+    width: 40px;
     height: 40px;
   }
 
-  .brand-block {
-    display: flex;
+  .brand-title {
+    font-size: 0.98rem;
   }
 
-  .navbar-glass {
-    height: 64px;
+  .brand-subtitle {
+    font-size: 0.72rem;
   }
 }
 </style>

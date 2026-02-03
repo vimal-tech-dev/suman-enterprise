@@ -1,42 +1,64 @@
 /* /src/assets/main.css */
 @import './base.css';
 
+/* Main app container */
 #app {
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 80px 12px 32px;
-  /* top = navbar height + spacing */
+  padding: 80px 14px 36px;
   font-weight: normal;
 }
 
-/* Links in emerald */
+/* Links and primary actions */
 a,
 .green {
   text-decoration: none;
-  color: #22c55e;
+  color: var(--gold-accent);
   transition: 0.3s ease;
-  padding: 2px;
 }
 
 @media (hover: hover) {
   a:hover {
-    background-color: rgba(34, 197, 94, 0.12);
+    color: var(--gold-soft);
   }
 }
 
-/* Remove old desktop flex/grid layout so Vuetify handles responsiveness */
+/* Vuetify overrides for cohesive look */
+.v-application {
+  background: transparent !important;
+  color: var(--body-color) !important;
+}
+
+/* Text fields & selects */
+.v-field--variant-outlined {
+  border-radius: 18px !important;
+}
+
+.v-field__outline {
+  --v-field-border-opacity: 0.35;
+}
+
+/* Buttons */
+.v-btn {
+  text-transform: none !important;
+  letter-spacing: 0.04em !important;
+  border-radius: var(--radius-pill) !important;
+}
+
+/* Cards */
+.v-card {
+  border-radius: var(--radius-lg) !important;
+}
+
+/* Responsive layout */
 @media (min-width: 1024px) {
-  body {
-    display: block;
-  }
-
   #app {
-    padding: 88px 20px 40px;
+    padding: 92px 24px 40px;
   }
 }
 
-/* Keep button text readable on dark background */
-button,
-.v-application .v-btn {
-  color: inherit !important;
+@media (max-width: 600px) {
+  #app {
+    padding: 70px 10px 28px;
+  }
 }
